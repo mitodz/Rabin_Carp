@@ -45,9 +45,9 @@ public class Main {
                 tempHash = h[i];
             }
         }
-        for (int i = n; i >= pL  ; i--) {
-            if (h[i] == pHash) {
-                if (pattern.equals(text.substring(n - pL))) {
+        for (int i = n - pL; i >= pL  ; i--) {
+            if (h[n - i] == pHash) {
+                if (pattern.equals(text.substring(i, n - i + 1))) {
                     sb.append(i).append(" ");
                 }
             }
