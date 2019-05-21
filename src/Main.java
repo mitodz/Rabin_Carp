@@ -1,4 +1,4 @@
-//import java.util.Random;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -32,9 +32,9 @@ public class Main {
         int pL = pattern.length();
         int p = 2_147_483_647;//большое простое число1_073_676_287 2_147_483_647
         StringBuilder sb = new StringBuilder();
-        //Random rnd = new Random();
-        //int buf = rnd.nextInt(p);
-        int x = 1 ;
+        Random rnd = new Random();
+        int buf = rnd.nextInt(p);
+        int x = buf == 0 ? 1 : buf; //случайное число до p
         long big = pow(x, pL - 1, p); //самая большая степень x
         long pHash = getHash(pattern, p, x); //хэш паттэрна
         long tempHash = getHash(text.substring(n - pL), p, x);//последний хэш в тексте
@@ -43,7 +43,7 @@ public class Main {
         h[m - 1] = tempHash;
         if (m >= 2) {
             for (int i = m - 2; i >= 0; i--) {
-                h[i] = ((((((tempHash - txt[i + pL]) * big) % p + p) % p) * x) % p + p) % p + txt[i];
+                h[i] = (((((tempHash - txt[i + pL] * big) % p + p) % p) * x) % p + p) % p + txt[i];
                 tempHash = h[i];
             }
         }
