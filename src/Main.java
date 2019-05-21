@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -37,7 +38,7 @@ public class Main {
         long pHash = getHash(pattern, p, x); //хэш паттэрна
         long tempHash = getHash(text.substring(n - pL), p , x);//последний хэш в тексте
         int m = n - pL + 1; //размер результирующего массива
-        long[] h = new long[m];//результирующий массив
+        long[] h = new long[m];//результирующий массив хэшей
         h[m - 1] = tempHash;
         if (m >= 2) {
             for (int i = m - 2; i >= 0; i--) {
@@ -45,14 +46,14 @@ public class Main {
                 tempHash = h[i];
             }
         }
-        for (int i = n - pL; i >= 0  ; i--) {
+        for (int i = 0; i <= n - pL  ; i++) {
             if (h[i] == pHash) {
                 if (pattern.equals(text.substring(i, i + pL))) {
-                    sb.append(" ").append(i);
+                    sb.append(i).append(" ");
                 }
             }
         }
-        return sb.reverse().toString();
+        return sb.toString();
     }
 
     public static void main(String[] args) {
