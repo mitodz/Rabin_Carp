@@ -33,7 +33,7 @@ public class Main {
         char[] ptn = pattern.toCharArray();
         char[] txt = text.toCharArray();
         int n = text.length();//размер текста
-        int pL = pattern.length();
+        int pL = pattern.length();//размер паттерна
         int p = 2_147_483_647;//большое простое число
         StringBuilder sb = new StringBuilder();
         Random rnd = new Random();
@@ -45,16 +45,18 @@ public class Main {
         int m = n - pL + 1; //размер результирующего массива
         long[] h = new long[m];//результирующий массив хэшей
         h[m - 1] = tempHash;
+        //заполнение массива хэшей
         if (m >= 2) {
             for (int i = m - 2; i >= 0; i--) {
                 h[i] = (((((tempHash % p - (txt[i + pL] % p) * (big % p)) % p + p) % p) * x % p) % p + p) % p + txt[i] % p;
                 tempHash = h[i];
             }
         }
+        //алгоритм
         outer:
         for (int i = 0; i <= n - pL; i++) {
             if (h[i] == pHash) {
-                for (int j = 0; j < pL; j++) {
+                for (int j = 0; j < pL; j++) { //при совпадении хэшей, проверяются крайние символы
                     if (ptn[j] != txt[i + j] || ptn[pL - j - 1] != txt[i + pL - j - 1]) {
                         continue outer;
                     }
