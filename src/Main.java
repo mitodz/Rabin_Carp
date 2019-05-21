@@ -25,7 +25,7 @@ public class Main {
 
     /* реализация алгоритма Рабина-Карпа */
 
-    public static String RabinCarp (String pattern, String text) {
+    public String RabinCarp (String pattern, String text) {
         int n = text.length();//размер текста
         int pL = pattern.length();
         int p = 1_000_000_007;//большое простое число
@@ -59,6 +59,6 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         String pattern = sc.next();
         String text = sc.next();
-        System.out.print(RabinCarp(pattern, text));
+        System.out.print(new Main().RabinCarp(pattern, text));
     }
 }
