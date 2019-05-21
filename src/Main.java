@@ -48,7 +48,7 @@ public class Main {
         for (int i = n - pL; i >= 0  ; i--) {
             if (h[i] == pHash) {
                 if (pattern.equals(text.substring(i, i + pL))) {
-                    sb.append(i).append(" ");
+                    sb.append(" ").append(i);
                 }
             }
         }
