@@ -45,14 +45,14 @@ public class Main {
                 tempHash = h[i];
             }
         }
-        for (int i = n - pL; i >= pL  ; i--) {
-            if (h[n - i] == pHash) {
-                if (pattern.equals(text.substring(i, n - i + 1))) {
+        for (int i = n - pL; i >= 0  ; i--) {
+            if (h[i] == pHash) {
+                if (pattern.equals(text.substring(i, i + pL))) {
                     sb.append(i).append(" ");
                 }
             }
         }
-        return sb.toString();
+        return sb.reverse().toString();
     }
 
     public static void main(String[] args) {
