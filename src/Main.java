@@ -1,4 +1,4 @@
-import java.util.Random;
+//import java.util.Random;
 import java.util.Scanner;
 
 public class Main {
@@ -26,30 +26,36 @@ public class Main {
     /* реализация алгоритма Рабина-Карпа */
 
     public String RabinCarp (String pattern, String text) {
+        char[] ptn = pattern.toCharArray();
+        char[] txt = text.toCharArray();
         int n = text.length();//размер текста
         int pL = pattern.length();
-        int p = 1_000_000_007;//большое простое число
+        int p = 2_147_483_647;//большое простое число1_073_676_287 2_147_483_647
         StringBuilder sb = new StringBuilder();
-        Random rnd = new Random();
-        int buf = rnd.nextInt(p);
-        int x = buf == 0 ? 1 : buf; //случайное число до p
+        //Random rnd = new Random();
+        //int buf = rnd.nextInt(p);
+        int x = 1 ;
         long big = pow(x, pL - 1, p); //самая большая степень x
         long pHash = getHash(pattern, p, x); //хэш паттэрна
-        long tempHash = getHash(text.substring(n - pL), p , x);//последний хэш в тексте
+        long tempHash = getHash(text.substring(n - pL), p, x);//последний хэш в тексте
         int m = n - pL + 1; //размер результирующего массива
         long[] h = new long[m];//результирующий массив хэшей
         h[m - 1] = tempHash;
         if (m >= 2) {
             for (int i = m - 2; i >= 0; i--) {
-                h[i] = (((((tempHash - text.charAt(i + pL) * big) % p + p) % p) * x) % p + p) % p + text.charAt(i);
+                h[i] = ((((((tempHash - txt[i + pL]) * big) % p + p) % p) * x) % p + p) % p + txt[i];
                 tempHash = h[i];
             }
         }
-        for (int i = 0; i <= n - pL  ; i++) {
+        outer:
+        for (int i = 0; i <= n - pL; i++) {
             if (h[i] == pHash) {
-                if (pattern.equals(text.substring(i, i + pL))) {
-                    sb.append(i).append(" ");
+                for (int j = 0; j < pL; j++) {
+                    if (ptn[j] != txt[i + j] || ptn[pL - j - 1] != txt[i + pL - j - 1]) {
+                        continue outer;
+                    }
                 }
+                sb.append(i).append(" ");
             }
         }
         return sb.toString();
