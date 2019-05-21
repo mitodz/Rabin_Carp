@@ -48,4 +48,23 @@ class MainTest {
         String expected = "4 ";
         assertEquals(expected, actual);
     }
+
+    @Test
+    void rabinCarp6() {
+        String pattern = "aaab";
+        String text = "aaab";
+        String actual = new Main().RabinCarp(pattern, text);
+        String expected = "0 ";
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void rabinCarp7() {
+        String pattern = "aaab";
+        String text = "aaac";
+        String actual = new Main().RabinCarp(pattern, text);
+        String expected = "";
+        assertEquals(expected, actual);
+    }
+
 }

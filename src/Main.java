@@ -1,5 +1,7 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Main {
 
@@ -8,7 +10,7 @@ public class Main {
     public static long pow(int x, int i, int p) {
         long result = 1;
         for (int j = 1; j <= i; j++) {
-            result = ((result * x) % p + p) % p;
+            result = ((result % p) * (x % p)) % p;
         }
         return result;
     }
@@ -17,20 +19,22 @@ public class Main {
 
     public static int getHash(String word, int p, int x) {
         long result = 0;
+        long pow = 1;
         for (int i = 0; i < word.length(); i++) {
-            result = (result + ((word.charAt(i) * pow(x, i, p)) % p + p) % p + p) % p;
+            result = (result % p + ((word.charAt(i) % p) * pow) % p + p) % p;
+            pow = (((pow % p) * (x % p)) % p + p) % p;
         }
         return (int) (result);
     }
 
     /* реализация алгоритма Рабина-Карпа */
 
-    public String RabinCarp (String pattern, String text) {
+    public String RabinCarp(String pattern, String text) {
         char[] ptn = pattern.toCharArray();
         char[] txt = text.toCharArray();
         int n = text.length();//размер текста
         int pL = pattern.length();
-        int p = 2_147_483_647;//большое простое число1_073_676_287 2_147_483_647
+        int p = 2_147_483_647;//большое простое число
         StringBuilder sb = new StringBuilder();
         Random rnd = new Random();
         int buf = rnd.nextInt(p);
@@ -43,7 +47,7 @@ public class Main {
         h[m - 1] = tempHash;
         if (m >= 2) {
             for (int i = m - 2; i >= 0; i--) {
-                h[i] = (((((tempHash - txt[i + pL] * big) % p + p) % p) * x) % p + p) % p + txt[i];
+                h[i] = (((((tempHash % p - (txt[i + pL] % p) * (big % p)) % p + p) % p) * x % p) % p + p) % p + txt[i] % p;
                 tempHash = h[i];
             }
         }
@@ -61,10 +65,10 @@ public class Main {
         return sb.toString();
     }
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        String pattern = sc.next();
-        String text = sc.next();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String pattern = br.readLine();
+        String text = br.readLine();
         System.out.print(new Main().RabinCarp(pattern, text));
     }
 }
