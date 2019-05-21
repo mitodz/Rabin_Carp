@@ -36,12 +36,12 @@ public class Main {
         long big = pow(x, pL - 1, p); //самая большая степень x
         long pHash = getHash(pattern, p, x); //хэш паттэрна
         long tempHash = getHash(text.substring(n - pL), p , x);//последний хэш в тексте
-        int m = n - pL; //размер результирующего массива
+        int m = n - pL + 1; //размер результирующего массива
         long[] h = new long[m];//результирующий массив
         h[m - 1] = tempHash;
         if (m >= 2) {
             for (int i = m - 2; i >= 0; i--) {
-                h[i] = (((((tempHash - text.charAt(i + m) * big) % p + p) % p) * x) % p + p) % p + text.charAt(i);
+                h[i] = (((((tempHash - text.charAt(i + pL) * big) % p + p) % p) * x) % p + p) % p + text.charAt(i);
                 tempHash = h[i];
             }
         }
