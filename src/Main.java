@@ -56,14 +56,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner("aba\n" +
-                "abacaba");
-        System.out.print(new Main().getResult(sc));
-    }
-
-    public String getResult(Scanner sc) {
+        Scanner sc = new Scanner(System.in);
         String pattern = sc.next();
         String text = sc.next();
-        return RabinCarp(pattern, text);
+        System.out.print(RabinCarp(pattern, text));
     }
 }
